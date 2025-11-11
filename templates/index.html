@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy - Hệ Thống Tư Vấn Dinh Dưỡng Thông Minh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: #ffffff;
+            overflow-x: hidden;
+            font-size: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 5px 100px;
+            display: flex;
+            justify-content: center;
+            background: white;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 4200px; /* đảm bảo không bị kéo rộng */
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo img {
+            height: 100px;      /* 🔥 chỉnh chiều cao logo */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo span {
+            font-size: 40px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        nav {
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 15px 60px;
+        }
+
+    /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .logo img {
+            height: 70px;
+            width: auto;
+            border-radius: 8px;
+        }
+        .logo span {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4a5568;
+        }
+
+        /* Menu giữa */
+        .nav-links {
+            display: flex;
+            gap: 60px;
+            list-style: none;
+            justify-content: center;
+            flex: 1;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #cbf9f3;
+        }
+
+        /* Nút Bắt đầu bên phải */
+        .nav-button {
+            margin-left: auto;
+        }
+        .start-btn {
+            background-color: #abf8e4;
+            color: rgb(55, 47, 47);
+            padding: 10px 26px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+        .start-btn:hover {
+            background-color: #b4eadd;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            color: rgb(31, 62, 53);
+            margin-bottom: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: rgba(46, 66, 70, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #ff924f;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            font-size: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            font-size: 20px;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #ff9a9a;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .card-1 {
+            top: 10%;
+            right: -10%;
+            width: 180px;
+        }
+
+        .card-2 {
+            bottom: 15%;
+            left: -10%;
+            width: 200px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 5%;
+            background: #d4eaff;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+            
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 5%;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+        }
+
+        .about-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            border-radius: 16px;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Diet Types Section */
+        .diets {
+            padding: 120px 5%;
+            background: #f8f9fa;
+        }
+
+        .diets-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .diet-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .diet-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .diet-image {
+            height: 200px;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .diet-content {
+            padding: 30px;
+        }
+
+        .diet-content h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .diet-content p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content, .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid, .diets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 42px;
+            }
+            
+            .features-grid, .diets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+    <div class="nav-container">
+        <div class="logo">
+            <img src="/static/images/logo.jpg" alt="Logo">
+            <span>Healthy</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#features">Tính năng</a></li>
+            <li><a href="#about">Về chúng tôi</a></li>
+            <li><a href="#diets">Chế độ ăn</a></li>
+            <li><a href="/predict" style="color: #ff924f;">Bắt đầu </a></li>
+            
+        </ul>
+    </div>
+</nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Hành trình khỏe đẹp của bạn bắt đầu từ đây</h1>
+                <p>Healthy - Hệ thống tư vấn dinh dưỡng thông minh sử dụng AI và Machine Learning để đề xuất chế độ ăn phù hợp nhất với cơ địa và mục tiêu của bạn</p>
+                <div class="cta-buttons">
+                    <a href="/predict" class="btn btn-primary">Bắt đầu ngay</a>
+                    <a href="#about" class="btn btn-secondary">Tìm hiểu thêm</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image">
+                    <img src="/static/images/healthy_1.png" alt="Healthy Illustration" />
+                </div>
+                    <div style="font-size: 32px; margin-bottom: 8px;">📊</div>
+                    <div style="font-weight: 600; color: #96c9ff 0%, #d4a0ff 100%;">AI Phân tích</div>
+                    <div style="font-size: 14px; color: #666;">Độ chính xác cao</div>
+                    <div style="font-size: 32px; margin-bottom: 8px;">💪</div>
+                    <div style="font-weight: 600; color: #96c9ff, #d4a0ff">Cá nhân hóa</div>
+                    <div style="font-size: 14px; color: #666;">Theo nhu cầu riêng</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="hero" id="hero">
+        <div class="section-header">
+            <h2>Tại sao chọn Healthy?</h2>
+            <p>Chúng tôi kết hợp công nghệ AI tiên tiến với kiến thức dinh dưỡng chuyên sâu để mang đến trải nghiệm cá nhân hóa tốt nhất cho bạn</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>AI Thông Minh</h3>
+                <p>Mô hình Machine Learning được train trên dữ liệu thực tế, phân tích chính xác nhu cầu dinh dưỡng của bạn</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Cá nhân hóa 100%</h3>
+                <p>Mỗi người là một cá thể độc nhất. Chúng tôi đưa ra lời khuyên dựa trên tuổi, giới tính, BMI, hoạt động và mục tiêu của bạn</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Phân tích chi tiết</h3>
+                <p>Tính toán chính xác BMI, TDEE, Macros (Protein, Fat, Carbs) và calories phù hợp với cơ thể bạn</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🥗</div>
+                <h3>Đa dạng chế độ ăn</h3>
+                <p>Từ Keto, Paleo, Mediterranean đến Vegan - tất cả được nghiên cứu kỹ lưỡng bởi chuyên gia dinh dưỡng</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Kết quả tức thì</h3>
+                <p>Nhận được phân tích và đề xuất chỉ trong vài giây. Không cần chờ đợi, không cần phức tạp</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>An toàn & Bảo mật</h3>
+                <p>Dữ liệu của bạn được bảo vệ tuyệt đối. Chúng tôi không lưu trữ hay chia sẻ thông tin cá nhân</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+<section class="hero" id="hero">
+        <div class="section-header">
+            <div class="about-text">
+                <h2 style="font-size: 48px; color: #204740; margin-bottom: 24px;">Về Healthy</h2>
+                <p style="font-size: 18px; color: #666; line-height: 1.8; margin-bottom: 24px;">
+                    Healthy là nền tảng tư vấn dinh dưỡng được phát triển bởi đội ngũ chuyên gia AI và dinh dưỡng học. Chúng tôi tin rằng mỗi người đều xứng đáng có một kế hoạch ăn uống phù hợp với cơ thể và lối sống của mình.
+                </p>
+                <p style="font-size: 18px; color: #666; line-height: 1.8; margin-bottom: 32px;">
+                    Sử dụng công nghệ Machine Learning, Healthy phân tích hàng trăm yếu tố để đưa ra đề xuất chính xác nhất. Hệ thống của chúng tôi được cập nhật liên tục với những nghiên cứu mới nhất về dinh dưỡng và sức khỏe.
+                </p>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Độ chính xác</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Mô hình AI</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Chế độ ăn</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Hỗ trợ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                    <img src="/static/images/healthy_2.png" alt="Healthy Illustration" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Diet Types Section -->
+<section class="hero" id="hero">
+        <div class="section-header">
+            <h2>Các chế độ ăn phổ biến</h2>
+            <p>Khám phá những chế độ ăn được nhiều người lựa chọn và tin dùng nhất</p>
+        </div>
+        <div class="diets-grid">
+            <div class="diet-card">
+                <div class="diet-image">🥑</div>
+                <div class="diet-content">
+                    <h3>Keto</h3>
+                    <p>Chế độ ăn ít carb, nhiều chất béo lành mạnh. Giúp giảm cân nhanh và cải thiện năng lượng</p>
+                </div>
+            </div>
+            <div class="diet-card">
+                <div class="diet-image">🐟</div>
+                <div class="diet-content">
+                    <h3>Mediterranean</h3>
+                    <p>Chế độ ăn Địa Trung Hải giàu omega-3, tốt cho tim mạch và tuổi thọ</p>
+                </div>
+            </div>
+            <div class="diet-card">
+                <div class="diet-image">🥩</div>
+                <div class="diet-content">
+                    <h3>Paleo</h3>
+                    <p>Ăn theo kiểu thời kỳ đồ đá, tập trung vào thực phẩm tự nhiên, không chế biến</p>
+                </div>
+            </div>
+            <div class="diet-card">
+                <div class="diet-image">🥬</div>
+                <div class="diet-content">
+                    <h3>Vegan</h3>
+                    <p>Chế độ ăn thuần chay 100%, thân thiện với môi trường và giảm cholesterol</p>
+                </div>
+            </div>
+            <div class="diet-card">
+                <div class="diet-image">🍚</div>
+                <div class="diet-content">
+                    <h3>Low Carb</h3>
+                    <p>Giảm tinh bột, kiểm soát đường huyết và giảm cân ổn định lâu dài</p>
+                </div>
+            </div>
+            <div class="diet-card">
+                <div class="diet-image">⚖️</div>
+                <div class="diet-content">
+                    <h3>Balanced</h3>
+                    <p>Cân bằng mọi nhóm thực phẩm, dễ duy trì và phù hợp mọi lứa tuổi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Sẵn sàng bắt đầu hành trình của bạn?</h2>
+        <p>Chỉ mất 2 phút để nhận được kế hoạch dinh dưỡng cá nhân hóa</p>
+        <a href="/predict" class="btn btn-primary" style="font-size: 18px; padding: 18px 50px;">Khám phá ngay →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🥗 Healthy</h3>
+                <p>Nền tảng tư vấn dinh dưỡng thông minh sử dụng AI, giúp bạn đạt được mục tiêu sức khỏe một cách khoa học và bền vững.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Sản phẩm</h4>
+                <ul>
+                    <li><a href="/predict">Dự đoán chế độ ăn</a></li>
+                    <li><a href="#features">Tính năng</a></li>
+                    <li><a href="#diets">Chế độ ăn</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Công ty</h4>
+                <ul>
+                    <li><a href="#about">Về chúng tôi</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Hỗ trợ</h4>
+                <ul>
+                    <li><a href="#">Trung tâm trợ giúp</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Healthy. Powered by Machine Learning & AI. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
