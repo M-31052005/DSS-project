@@ -23,38 +23,46 @@ def load_models():
 linear_model, rf_model, scaler = load_models()
 
 # Chế độ ăn recommendations
+# Các chế độ ăn phổ biến quốc tế
 DIET_RECOMMENDATIONS = {
-    'low_calorie': {
-        'name': 'Chế độ ăn giảm cân',
-        'description': 'Phù hợp cho người muốn giảm cân, hạn chế calories',
-        'foods': ['Rau xanh', 'Trái cây', 'Thịt gà không da', 'Cá', 'Sữa không đường'],
-        'avoid': ['Đồ chiên rán', 'Đồ ngọt', 'Nước ngọt có gas']
-    },
-    'balanced': {
-        'name': 'Chế độ ăn cân bằng',
-        'description': 'Phù hợp cho người muốn duy trì sức khỏe',
-        'foods': ['Ngũ cốc nguyên hạt', 'Thịt nạc', 'Cá', 'Rau củ', 'Trái cây', 'Sữa'],
-        'avoid': ['Fast food', 'Đồ ăn chế biến sẵn']
-    },
-    'high_protein': {
-        'name': 'Chế độ ăn tăng cơ',
-        'description': 'Phù hợp cho người tập gym, muốn tăng cơ',
-        'foods': ['Thịt bò', 'Thịt gà', 'Trứng', 'Cá hồi', 'Sữa tươi', 'Đậu nành'],
-        'avoid': ['Đồ ăn nhiều đường', 'Thức ăn nhanh']
-    },
-    'low_carb': {
-        'name': 'Chế độ ăn Keto/Low Carb',
-        'description': 'Phù hợp cho người muốn giảm mỡ nhanh',
-        'foods': ['Thịt', 'Cá', 'Trứng', 'Bơ', 'Dầu oliu', 'Rau xanh'],
+    'keto': {
+        'name': 'Keto',
+        'description': 'Chế độ ăn ít carb, nhiều chất béo lành mạnh giúp giảm cân nhanh và cải thiện năng lượng.',
+        'foods': ['Thịt', 'Cá', 'Trứng', 'Bơ', 'Dầu ô liu', 'Rau xanh'],
         'avoid': ['Gạo', 'Bánh mì', 'Mì', 'Khoai tây', 'Đồ ngọt']
     },
-    'heart_healthy': {
-        'name': 'Chế độ ăn tốt cho tim mạch',
-        'description': 'Phù hợp cho người có vấn đề về tim mạch',
-        'foods': ['Cá hồi', 'Yến mạch', 'Hạnh nhân', 'Quả bơ', 'Dầu oliu'],
-        'avoid': ['Thịt đỏ', 'Bơ sữa', 'Thức ăn chiên']
+    'vegan': {
+        'name': 'Vegan',
+        'description': 'Chế độ ăn thuần chay 100%, thân thiện với môi trường và tốt cho sức khỏe lâu dài.',
+        'foods': ['Rau củ', 'Trái cây', 'Các loại hạt', 'Đậu nành', 'Ngũ cốc nguyên hạt'],
+        'avoid': ['Thịt', 'Cá', 'Trứng', 'Sữa', 'Sản phẩm động vật']
+    },
+    'low_carb': {
+        'name': 'Low Carb',
+        'description': 'Giảm tinh bột, kiểm soát đường huyết và giúp giảm cân ổn định lâu dài.',
+        'foods': ['Trứng', 'Cá', 'Thịt gà', 'Bông cải xanh', 'Dầu dừa', 'Hạt chia'],
+        'avoid': ['Cơm trắng', 'Bánh mì', 'Đồ ngọt', 'Nước ngọt có gas']
+    },
+    'mediterranean': {
+        'name': 'Mediterranean',
+        'description': 'Giàu omega-3, nhiều rau củ, dầu ô liu và cá, giúp bảo vệ tim mạch và tăng tuổi thọ.',
+        'foods': ['Cá hồi', 'Dầu ô liu', 'Hạt hạnh nhân', 'Rau xanh', 'Trái cây tươi'],
+        'avoid': ['Đồ chiên rán', 'Thức ăn nhanh', 'Đồ ngọt công nghiệp']
+    },
+    'paleo': {
+        'name': 'Paleo',
+        'description': 'Lấy cảm hứng từ thời kỳ đồ đá – ăn thực phẩm tự nhiên, không qua chế biến.',
+        'foods': ['Thịt nạc', 'Cá', 'Trái cây', 'Rau củ', 'Hạt', 'Trứng'],
+        'avoid': ['Đường', 'Ngũ cốc tinh chế', 'Sữa', 'Đồ ăn công nghiệp']
+    },
+    'balanced': {
+        'name': 'Balanced',
+        'description': 'Cân bằng dinh dưỡng, phù hợp với hầu hết mọi người và mọi mục tiêu sức khỏe.',
+        'foods': ['Ngũ cốc nguyên hạt', 'Thịt nạc', 'Cá', 'Rau củ', 'Sữa'],
+        'avoid': ['Đồ chiên rán', 'Fast food', 'Thức ăn chế biến sẵn']
     }
 }
+
 
 def calculate_bmi(weight, height):
     """Tính BMI"""
@@ -78,19 +86,20 @@ def recommend_diet(age, gender, weight, height, activity_level, goal):
     """Gợi ý chế độ ăn dựa trên thông tin người dùng"""
     bmi = calculate_bmi(weight, height)
     
-    # Logic gợi ý
     if goal == 'giam_can' or bmi >= 25:
-        return 'low_calorie'
+        return 'keto'
     elif goal == 'tang_can':
-        return 'high_protein'
+        return 'paleo'
     elif goal == 'duy_tri':
         if bmi < 18.5:
-            return 'high_protein'
-        return 'balanced'
-    elif age > 40:
-        return 'heart_healthy'
+            return 'balanced'
+        return 'mediterranean'
+    elif age > 45:
+        return 'mediterranean'
+    elif gender.lower() in ['nữ', 'female'] and bmi < 20:
+        return 'vegan'
     else:
-        return 'balanced'
+        return 'low_carb'
 
 def calculate_calories(age, gender, weight, height, activity_level):
     """Tính lượng calories cần thiết"""
@@ -148,7 +157,8 @@ def analyze():
         height = float(data.get('chieu_cao') or data.get('height'))
         activity_level = data.get('hoat_dong') or data.get('activity_level')
         goal = data.get('muc_tieu') or data.get('goal')
-        
+        medical_history = data.get('tien_su_benh') or data.get('medical_history') or "Không có"
+
         # Tính toán các chỉ số
         bmi = calculate_bmi(weight, height)
         bmi_category = get_bmi_category(bmi)
